@@ -5,7 +5,7 @@ import Home from "./Components/HomeComponenit/Home";
 import Location from "./Components/LocationComponent/Location";
 import "../src/App.css";
 import Contact from "./Components/ContactComponent/Contact";
-
+import './i18n';
 function App() {
   return (
     <Router>

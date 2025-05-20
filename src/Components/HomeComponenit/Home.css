@@ -1,3 +1,13 @@
+[dir="rtl"] .hero-content {
+  text-align: right;
+}
+
+
+[dir="rtl"] .hero-title span {
+  display: inline-block;
+}
+
+
 .hero-section {
   height: 100vh;
   display: flex;
@@ -6,6 +16,15 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+[dir="rtl"] .hero-content {
+  text-align: right;
+}
+
+
+[dir="rtl"] .hero-title span {
+  display: inline-block;
 }
 
 .hero-content {

@@ -1,3 +1,14 @@
+/* Navbar.css */
+/* RTL support */
+[dir="rtl"] .nav-list {
+  padding-right: 0;
+}
+
+[dir="rtl"] .language-switcher {
+  margin-left: 0;
+  margin-right: 20px;
+}
+
 .navbar-container {
   display: flex;
   justify-content: space-between;
@@ -8,8 +19,8 @@
   height: 130px;
   top: 0;
   z-index: 1000;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)) ;
-  
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  backdrop-filter: blur(5px);
 }
 
 .nav-logo {
@@ -47,23 +58,163 @@
   background: rgba(239, 65, 54, 0.9);
 }
 
-.mobile-toggle {
-  display: none;
-  background: none;
+/* Language Switcher Styles */
+.language-switcher {
+  position: relative;
+  margin-left: 20px;
+}
+
+.language-toggle {
+  background: rgba(229, 229, 229, 0.2);
+  border: 1px solid rgba(229, 229, 229, 0.3);
+  color: #E5E5E5;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 120px;
+  justify-content: space-between;
+}
+
+.language-toggle:hover {
+  background: rgba(239, 65, 54, 0.7);
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  transition: transform 0.3s ease;
+}
+
+.language-switcher:hover .dropdown-arrow {
+  transform: translateY(2px);
+}
+
+.language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 8px;
+  padding: 8px 0;
+  margin-top: 8px;
+  min-width: 160px;
+  list-style: none;
+  z-index: 1001;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.language-dropdown li {
+  padding: 0;
+}
+
+.language-dropdown button {
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: transparent;
   border: none;
   color: #E5E5E5;
   cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
 }
 
+.language-dropdown button:hover {
+  background: rgba(239, 65, 54, 0.7);
+}
+
+.language-dropdown button.active {
+  background: rgba(239, 65, 54, 0.9);
+  font-weight: 600;
+}
+
+/* Hamburger Menu */
+.menu {
+  --s: 30px; 
+  --c: white; 
+  display: none;
+  height: var(--s);
+  aspect-ratio: 1;
+  border: none;
+  padding: 0;
+  border-inline: calc(var(--s)/2) solid #0000; 
+  box-sizing: content-box;
+  --_g1: linear-gradient(var(--c) 20%,#0000 0 80%,var(--c) 0) 
+         no-repeat content-box border-box;
+  --_g2: radial-gradient(circle closest-side at 50% 12.5%,var(--c) 95%,#0000) 
+         repeat-y content-box border-box;
+  background: 
+    var(--_g2) left  var(--_p,0px) top,
+    var(--_g1) left  calc(var(--s)/10 + var(--_p,0px)) top,
+    var(--_g2) right var(--_p,0px) top,
+    var(--_g1) right calc(var(--s)/10 + var(--_p,0px)) top;
+  background-size: 
+    20% 80%,
+    40% 100%;
+  position: relative;
+  clip-path: inset(0 25%);
+  -webkit-mask: linear-gradient(90deg,#0000,#000 25% 75%,#0000);
+  cursor: pointer;
+  transition: 
+    background-position .3s var(--_s,.3s), 
+    clip-path 0s var(--_s,.6s);
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+}
+
+.menu:before,
+.menu:after {
+  content:"";
+  position: absolute;
+  border-radius: var(--s);
+  inset: 40% 0;
+  background: var(--c);
+  transition: transform .3s calc(.3s - var(--_s,.3s));
+}
+
+.menu:checked {
+  clip-path: inset(0);
+  --_p: calc(-1*var(--s));
+  --_s: 0s;
+}
+
+.menu:checked:before {
+  transform: rotate(45deg);
+}
+
+.menu:checked:after {
+  transform: rotate(-45deg);
+}
+
+.menu:focus-visible {
+  clip-path: none;
+  -webkit-mask: none;
+  border: none;
+  outline: 2px solid var(--c);
+  outline-offset: 5px;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
   .nav-menu {
     position: fixed;
-    top: 70px;
+    top: 130px;
     right: -100%;
-    background: rgba(0, 0, 0, 0.95);
-    width: 100%;
-    height: calc(100vh - 70px);
-    transition: right 0.3s ease;
+    background: rgba(0, 0, 0, 0.8);
+    width: 50%;
+    height: calc(50vh - 70px);
+    transition: right 0.35s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    backdrop-filter: blur(10px);
   }
 
   .nav-menu.active {
@@ -73,10 +224,23 @@
   .nav-list {
     flex-direction: column;
     align-items: center;
-    padding: 2rem 0;
+    padding: 0;
+    width: 100%;
   }
 
-  .mobile-toggle {
+  .language-switcher {
+    position: relative;
+    margin: 20px auto;
+    width: 80%;
+  }
+
+  .language-dropdown {
+    width: 100%;
+    right: auto;
+    left: 0;
+  }
+  
+  .menu {
     display: block;
   }
 }

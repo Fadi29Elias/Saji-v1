@@ -1,7 +1,25 @@
+/* RTL specific styles */
+[dir="rtl"] .location-header,
+[dir="rtl"] .info-header {
+  text-align: right;
+}
+
+[dir="rtl"] .info-details {
+  text-align: right;
+  padding-right: 15px;
+}
+
+[dir="rtl"] .info-icon {
+  margin-left: 8px;
+  margin-right: 0;
+}
+
 .location-section {
   padding: 6rem 5%;
   background: #ffffff ;
 }
+
+
 
 .location-header {
   text-align: center;
