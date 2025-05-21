@@ -1,7 +1,7 @@
 /* RTL specific styles */
 [dir="rtl"] .contact-header,
 [dir="rtl"] .contact-card-header {
-  text-align: right;
+  text-align: center;
 }
 
 [dir="rtl"] .contact-icon {
@@ -10,7 +10,7 @@
 }
 
 [dir="rtl"] .contact-card {
-  text-align: right;
+  text-align: center;
 }
 
 .contact-section {

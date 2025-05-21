@@ -208,7 +208,7 @@
     right: -100%;
     background: rgba(0, 0, 0, 0.8);
     width: 50%;
-    height: calc(50vh - 70px);
+    height: calc(100vh - 70px);
     transition: right 0.35s ease;
     display: flex;
     flex-direction: column;
@@ -219,6 +219,18 @@
 
   .nav-menu.active {
     right: 0;
+  }
+
+
+  [dir="rtl"] .nav-menu {
+    right: auto;
+    left: -100%;
+    transition: left 0.35s ease;
+  }
+
+  [dir="rtl"] .nav-menu.active {
+    left: 0;
+    right: auto;
   }
 
   .nav-list {
@@ -240,7 +252,22 @@
     left: 0;
   }
   
+  [dir="rtl"] .language-dropdown {
+    right: 0;
+    left: auto;
+  }
+
   .menu {
     display: block;
   }
+
+  .under-line {
+    width: 80px;
+    height: 4px;
+    background: #FCB040;
+    margin: 60px auto;
+    border-radius: 2px;
+  }
 }
+
+

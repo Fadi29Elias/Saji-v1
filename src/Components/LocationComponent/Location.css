@@ -1,11 +1,12 @@
 /* RTL specific styles */
 [dir="rtl"] .location-header,
-[dir="rtl"] .info-header {
-  text-align: right;
+[dir="rtl"] .info-header
+ {
+  text-align: center;
 }
 
 [dir="rtl"] .info-details {
-  text-align: right;
+  text-align: center;
   padding-right: 15px;
 }
 
