@@ -110,8 +110,10 @@ i18n
       escapeValue: false
     },
     detection: {
-      order: ['cookie', 'htmlTag', 'localStorage', 'path', 'subdomain'],
-      caches: ['cookie']
+      order: ['localStorage', 'cookie', 'htmlTag', 'navigator', 'path'],
+      caches: ['localStorage', 'cookie'],
+      lookupLocalStorage: 'i18nextLng',
+      lookupCookie: 'i18next',
     }
   });
 

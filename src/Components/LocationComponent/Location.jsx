@@ -7,7 +7,10 @@ function Location() {
   const { t } = useTranslation();
 
   return (
+    
     <section id="location" className="location-section">
+
+
       <div className="location-header">
         <h2 className="section-title">{t('location.title')}</h2>
         <div className="underline" />
