@@ -13,6 +13,7 @@ i18n
             home: 'Home',
             location: 'Location',
             contact: 'Contact',
+            menu:"Menu",
             menuAriaLabel: 'Display the menu',
           },
           home: {
@@ -45,6 +46,7 @@ i18n
             home: 'الرئيسية',
             location: 'الموقع',
             contact: 'اتصل بنا',
+            menu:"قائمة الطعام",
             menuAriaLabel: 'عرض القائمة',
           },
           home: {
@@ -77,6 +79,7 @@ i18n
             home: 'Strona Główna',
             location: 'Lokalizacja',
             contact: 'Kontakt',
+            menu:"Menu",
             menuAriaLabel: 'Pokaż menu'
           },
           home: {
