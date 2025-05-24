@@ -17,7 +17,6 @@ const Navbar = React.memo(() => {
     { code: "pl", name: "Polski" },
   ];
 
-  // Set initial language and direction from localStorage
   useEffect(() => {
     const savedLanguage = localStorage.getItem("i18nextLng") || "en";
     if (i18n.language !== savedLanguage) {
@@ -26,7 +25,6 @@ const Navbar = React.memo(() => {
     document.body.dir = savedLanguage === "ar" ? "rtl" : "ltr";
   }, [i18n]);
 
-  // Click-outside handler for language dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (isLanguageDropdownOpen && !event.target.closest(".language-switcher")) {
@@ -57,7 +55,7 @@ const Navbar = React.memo(() => {
       const navbarHeight = document.querySelector(".navbar-container")?.offsetHeight || 130;
       const offset = element.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: offset - navbarHeight, behavior: "smooth" });
-      element.focus(); // Move focus for accessibility
+      element.focus();
     }
   };
 
@@ -84,6 +82,17 @@ const Navbar = React.memo(() => {
           >
             <Link to="/" onClick={(e) => e.preventDefault()}>
               {t("navbar.home")}
+            </Link>
+          </li>
+          <li
+            className="nav-item"
+            role="menuitem"
+            tabIndex="0"
+            onClick={(e) => handleNavItemClick(e, "#menu")}
+            onKeyDown={(e) => e.key === "Enter" && handleNavItemClick(e, "#menu")}
+          >
+            <Link to="/menu" onClick={(e) => e.preventDefault()}>
+              {t("navbar.menu")}
             </Link>
           </li>
           <li

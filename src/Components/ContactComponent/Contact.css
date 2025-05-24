@@ -1,4 +1,4 @@
-/* RTL specific styles */
+
 [dir="rtl"] .contact-header,
 [dir="rtl"] .contact-card-header {
   text-align: center;
@@ -82,7 +82,7 @@
   color: #FCB040;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .contact-content {
     flex-direction: column;
