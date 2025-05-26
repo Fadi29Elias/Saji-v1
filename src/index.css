@@ -1,8 +1,18 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   transition: all 0.5s ease-in-out;
   scroll-behavior: smooth;
-
+}
+::-webkit-scrollbar {
+  background-color: #c3af9d;
+  display: none;
+  width: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #e8e2ca;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
 }
