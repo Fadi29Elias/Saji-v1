@@ -9,7 +9,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  Tooltip,
   Typography,
   useTheme,
 } from "@mui/material";
@@ -19,31 +18,31 @@ import { useTranslation } from "react-i18next";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { keyframes } from "@emotion/react";
+
 const Navbar = () => {
   const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  30% {
-    opacity: 0.4;
-  }
-  60% {
-    opacity: 0.7;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
+    0% { opacity: 0; }
+    30% { opacity: 0.4; }
+    60% { opacity: 0.7; }
+    100% { opacity: 1; }
+  `;
 
-  const { t, i18n } = useTranslation("header");
+  const { t, i18n } = useTranslation("navbar");
   const theme = useTheme();
-  const getLang = Cookies.get("i18nextLng");
-  const mode = useSettingsStore((state) => state.mode);
+  const getLang = Cookies.get("i18nextLng") || i18n.language; // Fallback to i18n.language
   const direction = useSettingsStore((state) => state.direction);
-
   const setDirection = useSettingsStore((state) => state.setDirection);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const navigate = useNavigate();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Debug language changes
+  useEffect(() => {
+    console.log("Current language:", i18n.language);
+    console.log("Cookie i18nextLng:", Cookies.get("i18nextLng"));
+    console.log("Current translations:", t(["home", "contact", "location", "menu"]));
+  }, [i18n.language, t]);
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -53,48 +52,59 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const toggleLang = (lang) => {
-    const newDirection = lang === "ar" ? "rtl" : "ltr";
-    setDirection(newDirection);
-    i18n.changeLanguage(lang);
-    Cookies.set("i18nextLng", lang);
-    Cookies.set("direction", newDirection);
-    handleClose();
+  const toggleLang = async (lang) => {
+    try {
+      const newDirection = lang === "ar" ? "rtl" : "ltr";
+      await i18n.changeLanguage(lang); // Ensure async language change completes
+      Cookies.set("i18nextLng", lang, { expires: 30 }); // Set cookie with 30-day expiry
+      Cookies.set("direction", newDirection, { expires: 30 });
+      setDirection(newDirection);
+      console.log(`Language changed to: ${lang}, Direction: ${newDirection}`);
+      handleClose();
+    } catch (error) {
+      console.error("Error changing language:", error);
+    }
   };
-  const [scrolled, setScrolled] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50); // Change to 0 if you want instant scroll effect
+      setScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleNavigation = (key) => {
+    if (key === "home") {
+      navigate("/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else if (key === "contact" || key === "location") {
+      const element = document.getElementById(key);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/");
+      }
+    } else if (key === "menu") {
+      navigate("/menus");
+    }
+  };
+
   return (
     <Box
       sx={{
-        // background: "linear-gradient(135deg, #201f1f, #25211b5f)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         px: "60px",
         width: "100%",
-        // py: "4px",
-        zIndex: 10,
-        // backdropFilter: "blur(10px)",
-        // backdropFilter: !scrolled ? "none" : "blur(10px)",
-        // boxShadow:
-        // "0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2)",
-        // transition: "all 0.3s ease-in-out",
-        // backgroundColor: "rgba(0,0,0,0.8)",
         py: "15px",
         backgroundColor: "transparent !important",
         position: "absolute",
         top: 0,
         left: 0,
+        zIndex: 10,
       }}
     >
       <Box
@@ -122,12 +132,11 @@ const Navbar = () => {
       <Box
         sx={{ display: "flex", gap: { xs: 1, md: 3 }, alignItems: "center" }}
       >
-        {["Home", "Contact", "Location"].map((label) => (
+        {["home", "contact", "location"].map((key) => (
           <Button
-            key={label}
+            key={key}
             sx={{
               color: "#fff",
-
               fontWeight: 500,
               fontSize: "15px",
               px: 2,
@@ -139,16 +148,16 @@ const Navbar = () => {
                 transform: "scale(1.05)",
               },
             }}
+            onClick={() => handleNavigation(key)}
           >
-            {label}
+            {t(key)}
           </Button>
         ))}
         <Button
-          onClick={() => navigate("/menus")}
+          onClick={() => handleNavigation("menu")}
           sx={{
             backgroundColor: "#c83228",
             color: "#fff",
-
             fontWeight: 600,
             fontSize: "15px",
             px: 3,
@@ -162,12 +171,12 @@ const Navbar = () => {
               transform: "translateY(-2px)",
             },
           }}
+          aria-label={t("menuAriaLabel")}
         >
-          Menu
+          {t("menu")}
         </Button>
       </Box>
       <Box>
-        {" "}
         <IconButton
           onClick={handleMenuClick}
           sx={{
@@ -186,16 +195,15 @@ const Navbar = () => {
               objectFit: "cover",
               width: "18px",
               height: "18px",
-              color: "#fff",
             },
           }}
         >
           {getLang === "en" ? (
-            <img src={enFlag} />
+            <img src={enFlag} alt="English" />
           ) : getLang === "ar" ? (
-            <img src={arFlag} />
-          ) : (
-            <img src={plLang} />
+            <img src={arFlag} alt="Arabic" />
+          ) :  (
+            <img src={plLang} alt="Polish" />
           )}
           <MdOutlineKeyboardArrowDown />
         </IconButton>
@@ -242,14 +250,8 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <img src={arFlag} />
-            <Typography
-              sx={{
-                fontSize: "12px",
-              }}
-            >
-              AR
-            </Typography>
+            <img src={arFlag} alt="Arabic" />
+            <Typography sx={{ fontSize: "12px" }}>AR</Typography>
           </MenuItem>
           <MenuItem
             onClick={() => toggleLang("en")}
@@ -266,14 +268,8 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <img src={enFlag} />
-            <Typography
-              sx={{
-                fontSize: "12px",
-              }}
-            >
-              EN
-            </Typography>
+            <img src={enFlag} alt="English" />
+            <Typography sx={{ fontSize: "12px" }}>EN</Typography>
           </MenuItem>
           <MenuItem
             onClick={() => toggleLang("pl")}
@@ -290,7 +286,7 @@ const Navbar = () => {
               alignItems: "center",
             }}
           >
-            <img src={plLang} />
+            <img src={plLang} alt="Polish" />
             <Typography sx={{ fontSize: "12px" }}>PL</Typography>
           </MenuItem>
         </Menu>

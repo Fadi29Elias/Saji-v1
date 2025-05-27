@@ -19,8 +19,9 @@ import saj4 from "@/assets/sajs/saj4.jpeg";
 import saj5 from "@/assets/sajs/saj5.jpeg";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 const Home = () => {
-  const { t } = useTranslation("index");
+  const { t } = useTranslation("home"); // Changed to "home" namespace
   const swiperRef = useRef(null);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ const Home = () => {
     { image: saj1 },
     { image: saj5 },
   ];
+
   return (
     <Box component="section">
       <Box
@@ -45,7 +47,6 @@ const Home = () => {
           display: "flex",
           flexDirection: "column",
           gap: "400px !important",
-          // minHeight: "100vh",
           height: "100vh",
         }}
         className="home"
@@ -132,7 +133,7 @@ const Home = () => {
                       fontSize: "60px",
                     }}
                   >
-                    Saji's
+                    {t("TitleLine1")} {/* Use TitleLine1 from home namespace */}
                   </Typography>
                   <Typography
                     sx={{
@@ -141,7 +142,7 @@ const Home = () => {
                       fontSize: "70px",
                     }}
                   >
-                    Restaurant & Cafeteria
+                    {t("TitleLine2")} {/* Translated restaurant title */}
                   </Typography>
                   <Typography
                     sx={{
@@ -150,7 +151,7 @@ const Home = () => {
                       fontSize: "40px",
                     }}
                   >
-                    Authentic Middle Eastern Cuisine
+                    {t("Subtitle")} {/* Translated subtitle */}
                   </Typography>
                   <Button
                     sx={{
@@ -165,7 +166,7 @@ const Home = () => {
                       },
                     }}
                   >
-                    Coming Soon...
+                    {t("CtaButton")} {/* Translated CTA button */}
                   </Button>
                 </Box>
               </Box>
