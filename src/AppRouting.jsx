@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Loader from "./components/shared/Loader";
+
 import Home from "./pages/home/Home";
 import Layout from "./Components/layout/Layout";
 import Menu from "./pages/menu/Menu";
@@ -14,7 +14,7 @@ const AppRouting = () => {
       <Route
         path="/"
         element={
-          <React.Suspense fallback={<Loader />}>
+          <React.Suspense fallback>
             <Layout>
               <Home />
               <Location/>
@@ -26,7 +26,7 @@ const AppRouting = () => {
       <Route
         path="/menus"
         element={
-          <React.Suspense fallback={<Loader />}>
+          <React.Suspense fallback>
             <Layout>
               <Menu />
             </Layout>
