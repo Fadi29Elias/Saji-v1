@@ -1,10 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import CustomErrorBoundary from "./components/shared/error-boundary/ErrorBondary";
+
 import Loader from "./components/shared/Loader";
 import Home from "./pages/home/Home";
 import Layout from "./Components/layout/Layout";
 import Menu from "./pages/menu/Menu";
+import Location from "./Components/LocationComponent/Location";
+import Contact from "./Components/ContactComponent/Contact";
 
 const AppRouting = () => {
   return (
@@ -13,11 +15,11 @@ const AppRouting = () => {
         path="/"
         element={
           <React.Suspense fallback={<Loader />}>
-            <CustomErrorBoundary>
-              <Layout>
-                <Home />
-              </Layout>
-            </CustomErrorBoundary>
+            <Layout>
+              <Home />
+              <Location/>
+              <Contact />
+            </Layout>
           </React.Suspense>
         }
       />
@@ -25,11 +27,9 @@ const AppRouting = () => {
         path="/menus"
         element={
           <React.Suspense fallback={<Loader />}>
-            <CustomErrorBoundary>
-              <Layout>
-                <Menu />
-              </Layout>
-            </CustomErrorBoundary>
+            <Layout>
+              <Menu />
+            </Layout>
           </React.Suspense>
         }
       />
