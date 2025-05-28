@@ -17,8 +17,6 @@ const AppRouting = () => {
           <React.Suspense fallback>
             <Layout>
               <Home />
-              <Location/>
-              <Contact />
             </Layout>
           </React.Suspense>
         }
